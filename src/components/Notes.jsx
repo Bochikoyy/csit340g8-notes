@@ -15,9 +15,13 @@ const initialNotes = [
 ]
 
 function Notes() {
-  const [notes, setNotes] = useState(initialNotes)
+  const [notes, setNotes] = useState(() => {
+    const saved = localStorage.getItem('notes')
+    return saved ? JSON.parse(saved) : initialNotes
+  }) 
+
   const [form, setForm] = useState({ title: '', body: '' })
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState('')  
 
   useEffect(() => {
     localStorage.setItem('notes', JSON.stringify(notes))
